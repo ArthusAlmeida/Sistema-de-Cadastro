@@ -10,6 +10,16 @@ def adicionar_item():
     carrinho_de_compras.append(item)
     print(f"{quantidade} {nome}(s) adicionado(s) ao carrinho.")
 
+# Função para excluir um item do carrinho de compras
+def excluir_item():
+    excluir_nome = input("Digite o nome do produto que deseja excluir: ")
+    for item in carrinho_de_compras:
+        if item["nome"] == excluir_nome:
+            carrinho_de_compras.remove(item)
+            print(f"{item['quantidade']} {item['nome']}(s) removido(s) do carrinho.")
+            return
+    print(f"{excluir_nome} não encontrado no carrinho.")
+
 # Função para calcular o total da compra
 def calcular_total():
     total = 0
@@ -28,16 +38,19 @@ def exibir_recibo():
 while True:
     print("\nOpções:")
     print("1. Adicionar item ao carrinho")
-    print("2. Exibir recibo da compra")
-    print("3. Sair do programa")
+    print("2. Excluir item do carrinho")
+    print("3. Exibir recibo da compra")
+    print("4. Sair do programa")
     
     opcao = input("Escolha uma opção: ")
     
     if opcao == "1":
         adicionar_item()
     elif opcao == "2":
-        exibir_recibo()
+        excluir_item()
     elif opcao == "3":
+        exibir_recibo()
+    elif opcao == "4":
         print("Obrigado por comprar conosco. Volte sempre!")
         break
     else:
