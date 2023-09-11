@@ -1,14 +1,28 @@
-# Criando uma lista vazia para o carrinho de compras
-carrinho_de_compras = []
+# Criando um dicionário vazio para o carrinho de compras
+carrinho_de_compras = {}
 
-# Função para adicionar um item ao carrinho de compras
+# Função para adicionar um item ao carrinho de compras ou atualizar a quantidade se já existir
 def adicionar_item():
     nome = input("Digite o nome do produto: ")
     preco = float(input("Digite o preço do produto: "))
     quantidade = int(input("Digite a quantidade desejada: "))
-    item = {"nome": nome, "preco": preco, "quantidade": quantidade}
-    carrinho_de_compras.append(item)
-    print(f"{quantidade} {nome}(s) adicionado(s) ao carrinho.")
+    
+    if nome in carrinho_de_compras:
+        carrinho_de_compras[nome]["quantidade"] += quantidade
+        print(f"{quantidade} {nome}(s) adicionado(s) ao carrinho.")
+    else:
+        item = {"preco": preco, "quantidade": quantidade}
+        carrinho_de_compras[nome] = item
+        print(f"{quantidade} {nome}(s) adicionado(s) ao carrinho.")
+
+# Função para excluir um item do carrinho de compras
+def excluir_item():
+    excluir_nome = input("Digite o nome do produto que deseja excluir: ")
+    if excluir_nome in carrinho_de_compras:
+        del carrinho_de_compras[excluir_nome]
+        print(f"{excluir_nome} removido do carrinho.")
+    else:
+        print(f"{excluir_nome} não encontrado no carrinho.")
 
 # Função para excluir um item do carrinho de compras
 def excluir_item():
@@ -23,15 +37,15 @@ def excluir_item():
 # Função para calcular o total da compra
 def calcular_total():
     total = 0
-    for item in carrinho_de_compras:
+    for item in carrinho_de_compras.values():
         total += item["preco"] * item["quantidade"]
     return total
 
 # Função para exibir o recibo da compra
 def exibir_recibo():
     print("Recibo de Compra:")
-    for item in carrinho_de_compras:
-        print(f"{item['quantidade']} {item['nome']}: R${item['preco'] * item['quantidade']:.2f}")
+    for nome, item in carrinho_de_compras.items():
+        print(f"{item['quantidade']} {nome}: R${item['preco'] * item['quantidade']:.2f}")
     print(f"Total: R${calcular_total():.2f}")
 
 # Loop principal do programa
